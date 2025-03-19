@@ -8,14 +8,34 @@ public class JSONPlaceholderExercise {
      * @return String - The JSON response from the API
      */
     public static String getPostById(Integer postId) {
-        // TODO: Student Implementation
-        // 1. Create a new HTTP request
-        // 2. Set the endpoint URL using BASE_URL + '/posts/' + postId
-        // 3. Set the HTTP method to 'GET'
-        // 4. Send the request and get the response
-        // 5. Return the response body as string
-        return null;
+        final String endpoint = BASE_URL +'/posts/' + postId;
+        String responseBody = '';
+        Http http = new Http();
+        
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(endpoint);
+        request.setMethod('GET');
+        request.setTimeout(120000);
+
+        try {
+            HttpResponse response = http.send(request);
+
+            if (response.getStatusCode() >= 200 && response.getStatusCode() < 300) {
+                responseBody = response.getBody();
+            } else {
+                throw new JSONPlaceholderException(
+                    'Error: Received status code: ' + response.getStatusCode() + ' - ' + response.getBody()
+                );
+            }
+        } catch (Exception e) {
+            throw new JSONPlaceholderException(
+                'Error: ' + e.getMessage()
+            );
+        }
+
+        return responseBody;
     }
+       
     
     /**
      * Exercise 2: Implement a POST request to create a new post
@@ -26,16 +46,41 @@ public class JSONPlaceholderExercise {
      * @return String - The JSON response from the API
      */
     public static String createPost(String title, String body, Integer userId) {
-        // TODO: Student Implementation
-        // 1. Create a new HTTP request
-        // 2. Set the endpoint URL using BASE_URL + '/posts'
-        // 3. Set the HTTP method to 'POST'
-        // 4. Create a JSON string with the post data
-        // 5. Set the request body
-        // 6. Send the request and get the response
-        // 7. Return the response body as string
-        return null;
+        final String endpoint = BASE_URL +'/posts/';
+        String responseBody = '';
+        String jsonBody = JSON.serialize(new Map<String, Object>{
+            'title' => title,
+            'body' => body,
+            'userId' => userId
+        });
+        
+        Http http = new Http();
+        
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(endpoint);
+        request.setMethod('POST');
+        request.setHeader('Content-Type', 'application/json');
+        request.setBody(jsonBody);
+
+        try {
+            HttpResponse response = http.send(request);
+
+            if (response.getStatusCode() >= 200 && response.getStatusCode() < 300) {
+                responseBody = response.getBody();
+            } else {
+                throw new JSONPlaceholderException(
+                    'Error: Received status code: ' + response.getStatusCode() + ' - ' + response.getBody()
+                );
+            }
+        } catch (Exception e) {
+            throw new JSONPlaceholderException(
+                'Error: ' + e.getMessage()
+            );
+        }
+
+        return responseBody;
     }
+       
     
     /**
      * Exercise 3: Implement a PUT request to update a post
@@ -47,15 +92,40 @@ public class JSONPlaceholderExercise {
      * @return String - The JSON response from the API
      */
     public static String updatePost(Integer postId, String title, String body, Integer userId) {
-        // TODO: Student Implementation
-        // 1. Create a new HTTP request
-        // 2. Set the endpoint URL using BASE_URL + '/posts/' + postId
-        // 3. Set the HTTP method to 'PUT'
-        // 4. Create a JSON string with the updated post data
-        // 5. Set the request body
-        // 6. Send the request and get the response
-        // 7. Return the response body as string
-        return null;
+        final String endpoint = BASE_URL +'/posts/'+ postId;
+        String responseBody = '';
+        String jsonBody = JSON.serialize(new Map<String, Object>{
+            'title' => title,
+            'body' => body,
+            'userId' => userId
+        });
+        
+        Http http = new Http();
+        
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(endpoint);
+        request.setMethod('PUT');
+        request.setHeader('Content-Type', 'application/json');
+        request.setBody(jsonBody);
+        request.setTimeout(120000);
+
+        try {
+            HttpResponse response = http.send(request);
+
+            if (response.getStatusCode() >= 200 && response.getStatusCode() < 300) {
+                responseBody = response.getBody();
+            } else {
+                throw new JSONPlaceholderException(
+                    'Error: Received status code: ' + response.getStatusCode() + ' - ' + response.getBody()
+                );
+            }
+        } catch (Exception e) {
+            throw new JSONPlaceholderException(
+                'Error: ' + e.getMessage()
+            );
+        }
+
+        return responseBody;
     }
     
     /**
@@ -66,15 +136,38 @@ public class JSONPlaceholderExercise {
      * @return String - The JSON response from the API
      */
     public static String patchPostTitle(Integer postId, String title) {
-        // TODO: Student Implementation
-        // 1. Create a new HTTP request
-        // 2. Set the endpoint URL using BASE_URL + '/posts/' + postId
-        // 3. Set the HTTP method to 'PATCH'
-        // 4. Create a JSON string with only the title
-        // 5. Set the request body
-        // 6. Send the request and get the response
-        // 7. Return the response body as string
-        return null;
+        final String endpoint = BASE_URL +'/posts/'+ postId;
+        String responseBody = '';
+        String jsonBody = JSON.serialize(new Map<String, Object>{
+            'title' => title
+        });
+        
+        Http http = new Http();
+        
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(endpoint);
+        request.setMethod('PATCH');
+        request.setHeader('Content-Type', 'application/json');
+        request.setBody(jsonBody);
+        request.setTimeout(120000);
+
+        try {
+            HttpResponse response = http.send(request);
+
+            if (response.getStatusCode() >= 200 && response.getStatusCode() < 300) {
+                responseBody = response.getBody();
+            } else {
+                throw new JSONPlaceholderException(
+                    'Error: Received status code: ' + response.getStatusCode() + ' - ' + response.getBody()
+                );
+            }
+        } catch (Exception e) {
+            throw new JSONPlaceholderException(
+                'Error: ' + e.getMessage()
+            );
+        }
+        
+        return responseBody;
     }
     
     /**
@@ -84,12 +177,32 @@ public class JSONPlaceholderExercise {
      * @return Integer - The HTTP status code from the response
      */
     public static Integer deletePost(Integer postId) {
-        // TODO: Student Implementation
-        // 1. Create a new HTTP request
-        // 2. Set the endpoint URL using BASE_URL + '/posts/' + postId
-        // 3. Set the HTTP method to 'DELETE'
-        // 4. Send the request and get the response
-        // 5. Return the response status code
-        return null;
+        final String endpoint = BASE_URL +'/posts/'+ postId;
+        Integer responseCode = 0;
+
+        Http http = new Http();
+        
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(endpoint);
+        request.setMethod('DELETE');
+        request.setTimeout(120000);
+
+        try {
+            HttpResponse response = http.send(request);
+
+            if (response.getStatusCode() >= 200 && response.getStatusCode() < 300) {
+                responseCode = response.getStatusCode();
+            } else {
+                throw new JSONPlaceholderException(
+                    'Error: Received status code: ' + response.getStatusCode() + ' - ' + response.getBody()
+                );
+            }
+        } catch (Exception e) {
+            throw new JSONPlaceholderException(
+                'Error: ' + e.getMessage()
+            );
+        }
+
+        return responseCode;
     }
 } 
