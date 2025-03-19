@@ -35,6 +35,24 @@ public class JSONPlaceholderMock implements HttpCalloutMock {
             + '"body": "This is a new post"'
             + '}';
     }
+
+     // Helper method to create sample response for BULK POST
+     public static String getSampleBULKResponse() {
+        return '['
+            +'{'
+            + '"userId": 1,'
+            + '"id": 101,'
+            + '"title": "New Post",'
+            + '"body": "This is a new post"'
+            +'},'
+            +'{'
+            + '"userId": 2,'
+            + '"id": 102,'
+            + '"title": "New Post2",'
+            + '"body": "This is a new post2"'
+            + '}'
+            + ']';
+    }
     
     // Helper method to create sample response for PUT
     public static String getSamplePutResponse() {

@@ -80,6 +80,46 @@ public class JSONPlaceholderExercise {
 
         return responseBody;
     }
+
+    //BULK createPost
+    public static List<String> createPostBulk(List<Map<String, Object>> posts) {
+        final String endpoint = BASE_URL +'/posts/';
+        List<String> responses = new List<String>();
+
+        for (Map<String, Object> post : posts) {
+            String jsonBody = JSON.serialize(new Map<String, Object>{
+                'userId' => post.get('userId'),
+                'title' => post.get('title'),
+                'body' => post.get('body')
+            });
+        
+        Http http = new Http();
+        
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint(endpoint);
+        request.setMethod('POST');
+        request.setHeader('Content-Type', 'application/json');
+        request.setBody(jsonBody);
+        request.setTimeout(120000);
+
+     try {
+            HttpResponse response = http.send(request);
+
+            if (response.getStatusCode() >= 200 && response.getStatusCode() < 300) {
+                responses.add(response.getBody());
+            } else {
+                throw new JSONPlaceholderException(
+                    'Error: Received status code: ' + response.getStatusCode() + ' - ' + response.getBody()
+                );
+            }
+        } catch (Exception e) {
+            throw new JSONPlaceholderException(
+                'Error: ' + e.getMessage()
+            );
+        }
+    }
+    return responses;
+}
        
     
     /**
